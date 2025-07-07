@@ -13,8 +13,8 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Font Awesome for Icons (more reliable than Lucide with React) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         @keyframes fadeIn {
@@ -79,36 +79,35 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, Fragment } = React;
         
-        // Icon components mapping
-        const iconComponents = {
-            Camera: 'camera',
-            Shield: 'shield',
-            MessageCircle: 'message-circle',
-            Globe: 'globe',
-            Calendar: 'calendar',
-            Phone: 'phone',
-            Mail: 'mail',
-            MapPin: 'map-pin',
-            Star: 'star',
-            CheckCircle: 'check-circle',
-            Brain: 'brain',
-            Heart: 'heart',
-            Activity: 'activity',
-            Zap: 'zap',
-            Bot: 'bot',
-            ChevronRight: 'chevron-right',
-            Menu: 'menu',
-            X: 'x',
-            Award: 'award',
-            Clock: 'clock',
-            Users: 'users',
-            ArrowRight: 'arrow-right',
-            ChevronDown: 'chevron-down'
-        };
-        
-        // Icon component wrapper
+        // Icon component using Font Awesome
         const Icon = ({ name, className = "" }) => {
-            return <i data-lucide={iconComponents[name]} className={className}></i>;
+            const iconMap = {
+                'Camera': 'fa-camera',
+                'Shield': 'fa-shield-halved',
+                'MessageCircle': 'fa-comment',
+                'Globe': 'fa-globe',
+                'Calendar': 'fa-calendar',
+                'Phone': 'fa-phone',
+                'Mail': 'fa-envelope',
+                'MapPin': 'fa-location-dot',
+                'Star': 'fa-star',
+                'CheckCircle': 'fa-circle-check',
+                'Brain': 'fa-brain',
+                'Heart': 'fa-heart',
+                'Activity': 'fa-chart-line',
+                'Zap': 'fa-bolt',
+                'Bot': 'fa-robot',
+                'ChevronRight': 'fa-chevron-right',
+                'Menu': 'fa-bars',
+                'X': 'fa-xmark',
+                'Award': 'fa-award',
+                'Clock': 'fa-clock',
+                'Users': 'fa-users',
+                'ArrowRight': 'fa-arrow-right',
+                'ChevronDown': 'fa-chevron-down'
+            };
+            
+            return <i className={`fas ${iconMap[name]} ${className}`}></i>;
         };
         
         const VECEnhancedHomepage = () => {
@@ -241,13 +240,6 @@
                     setTimeout(() => setCoachTyping(false), 2000);
                 }
             }, [activeToolIndex, showToolAnimation]);
-            
-            // Initialize Lucide icons after render
-            useEffect(() => {
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            });
             
             const renderToolAnimation = () => {
                 const tool = tools[activeToolIndex];
