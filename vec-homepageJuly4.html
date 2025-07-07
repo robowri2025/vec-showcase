@@ -134,13 +134,13 @@
             ];
             
             const tools = [
-                {
+                                        {
                     id: 'virtual-visits',
                     icon: 'Globe',
                     title: 'Virtual Visits, Any Language',
                     description: 'Virtual visits in your language. No interpreter needed.',
                     color: 'blue',
-                    gradient: 'from-blue-500 to-indigo-500'
+                    gradient: 'from-indigo-500 to-blue-500'
                 },
                 {
                     id: 'food-scanner',
@@ -148,23 +148,23 @@
                     title: 'AI Food Scanner',
                     description: 'Snap a photo, get instant carb counts',
                     color: 'purple',
-                    gradient: 'from-purple-500 to-pink-500'
+                    gradient: 'from-purple-500 to-violet-500'
                 },
                 {
                     id: 'med-safety',
                     icon: 'Shield',
                     title: 'Med Safety Check',
                     description: 'Instant medication interaction warnings',
-                    color: 'orange',
-                    gradient: 'from-orange-500 to-red-500'
+                    color: 'rose',
+                    gradient: 'from-rose-500 to-pink-500'
                 },
                 {
                     id: 'health-coach',
                     icon: 'Bot',
                     title: '24/7 Health Coach',
                     description: 'Get guidance and book appointments',
-                    color: 'green',
-                    gradient: 'from-green-500 to-teal-500'
+                    color: 'teal',
+                    gradient: 'from-teal-500 to-cyan-500'
                 }
             ];
             
@@ -747,7 +747,7 @@
                             <div className="max-w-7xl mx-auto">
                                 {/* Part 1: Single Rotating Showcase */}
                                 <div className="max-w-5xl mx-auto mb-8">
-                                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-8 md:p-12">
+                                    <div className="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-8 md:p-12">
                                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', alignItems: 'center' }}>
                                             {/* Left side - Current tool display */}
                                             <div>
@@ -768,7 +768,7 @@
                                             
                                             {/* Right side - Tool list with highlight */}
                                             <div className="relative">
-                                                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
+                                                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
                                                 <div className="relative bg-white rounded-2xl shadow-xl p-8 text-center">
                                                     <div className="flex justify-center space-x-2 mb-6">
                                                         {tools.map((_, index) => (
@@ -808,7 +808,7 @@
                                 
                                 {/* Part 2: Horizontal Animation Area */}
                                 {showToolAnimation && (
-                                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 md:p-8 mb-6 max-w-6xl mx-auto">
+                                    <div className="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-6 md:p-8 mb-6 max-w-6xl mx-auto">
                                         <div className="bg-white rounded-2xl shadow-xl h-[350px] overflow-hidden relative" style={{ animation: 'fadeIn 0.5s ease-out' }}>
                                             {renderToolAnimation()}
                                         </div>
