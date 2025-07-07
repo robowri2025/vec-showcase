@@ -79,36 +79,25 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, Fragment } = React;
         
-        // Icon components mapping
-        const iconComponents = {
-            Camera: 'camera',
-            Shield: 'shield',
-            MessageCircle: 'message-circle',
-            Globe: 'globe',
-            Calendar: 'calendar',
-            Phone: 'phone',
-            Mail: 'mail',
-            MapPin: 'map-pin',
-            Star: 'star',
-            CheckCircle: 'check-circle',
-            Brain: 'brain',
-            Heart: 'heart',
-            Activity: 'activity',
-            Zap: 'zap',
-            Bot: 'bot',
-            ChevronRight: 'chevron-right',
-            Menu: 'menu',
-            X: 'x',
-            Award: 'award',
-            Clock: 'clock',
-            Users: 'users',
-            ArrowRight: 'arrow-right',
-            ChevronDown: 'chevron-down'
-        };
-        
-        // Icon component wrapper
+        // Icon component wrapper - FIXED VERSION
         const Icon = ({ name, className = "" }) => {
-            return <i data-lucide={iconComponents[name]} className={className}></i>;
+            const iconRef = useRef(null);
+            
+            useEffect(() => {
+                if (iconRef.current && window.lucide) {
+                    const iconName = name.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
+                    iconRef.current.setAttribute('data-lucide', iconName);
+                    // Only create icon for this specific element
+                    window.lucide.createIcons({ 
+                        icons: {
+                            [iconName]: window.lucide.icons[iconName]
+                        },
+                        nodes: [iconRef.current]
+                    });
+                }
+            }, [name]);
+            
+            return <i ref={iconRef} className={className}></i>;
         };
         
         const VECEnhancedHomepage = () => {
@@ -241,13 +230,6 @@
                     setTimeout(() => setCoachTyping(false), 2000);
                 }
             }, [activeToolIndex, showToolAnimation]);
-            
-            // Initialize Lucide icons after render
-            useEffect(() => {
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            });
             
             const renderToolAnimation = () => {
                 const tool = tools[activeToolIndex];
@@ -429,6 +411,137 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </section>
+                    
+                    {/* Footer */}
+                    <footer className="bg-gray-900 text-white py-12">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
+                                <div>
+                                    <div className="flex items-center space-x-2 mb-4">
+                                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-teal-500 rounded-lg"></div>
+                                        <span className="font-semibold">Virginia Endocrinology</span>
+                                    </div>
+                                    <p className="text-gray-400">Expert care for your healthiest life</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold mb-4">Services</h4>
+                                    <ul className="space-y-2 text-gray-400">
+                                        <li><a href="#" className="hover:text-white transition">Diabetes Care</a></li>
+                                        <li><a href="#" className="hover:text-white transition">Thyroid Treatment</a></li>
+                                        <li><a href="#" className="hover:text-white transition">Hormone Therapy</a></li>
+                                        <li><a href="#" className="hover:text-white transition">Metabolic Health</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold mb-4">Resources</h4>
+                                    <ul className="space-y-2 text-gray-400">
+                                        <li><a href="#" className="hover:text-white transition">Patient Portal</a></li>
+                                        <li><a href="#" className="hover:text-white transition">AI Tools</a></li>
+                                        <li><a href="#" className="hover:text-white transition">Health Library</a></li>
+                                        <li><a href="#" className="hover:text-white transition">Insurance</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold mb-4">Office Hours</h4>
+                                    <ul className="space-y-2 text-gray-400">
+                                        <li>Monday - Friday: 8:00 AM - 5:00 PM</li>
+                                        <li>Saturday: 9:00 AM - 12:00 PM</li>
+                                        <li>Sunday: Closed</li>
+                                        <li className="pt-2">24/7 AI Health Coach Available</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                                <p>&copy; 2025 Virginia Endocrinology Consultants. All rights reserved.</p>
+                            </div>
+                        </div>
+                    </footer>
+                    
+                    {/* Health Coach Modal */}
+                    {showHealthCoach && (
+                        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                            <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-hidden shadow-2xl">
+                                <div className="bg-gradient-to-r from-green-500 to-teal-500 p-6 text-white">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center space-x-3">
+                                            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                                                <Icon name="Bot" className="w-6 h-6" />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-xl font-semibold">AI Health Coach</h3>
+                                                <p className="text-white/80 text-sm">I'm here to help 24/7</p>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => setShowHealthCoach(false)}
+                                            className="text-white/80 hover:text-white transition"
+                                        >
+                                            <Icon name="X" className="w-6 h-6" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="p-6">
+                                    <div className="space-y-4 mb-4 max-h-96 overflow-y-auto">
+                                        <div className="bg-green-50 p-4 rounded-lg">
+                                            <p className="text-gray-800">
+                                                Hello! I'm your AI Health Coach. I can help you:
+                                            </p>
+                                            <ul className="mt-2 space-y-1 text-sm text-gray-600">
+                                                <li>• Schedule appointments with Dr. Matthews</li>
+                                                <li>• Answer questions about our services</li>
+                                                <li>• Provide general health guidance</li>
+                                                <li>• Help in over 50 languages</li>
+                                            </ul>
+                                        </div>
+                                        {chatMessages.map((msg, idx) => (
+                                            <div key={idx} className={`p-4 rounded-lg ${
+                                                msg.sender === 'user' ? 'bg-blue-50 ml-8' : 'bg-gray-50 mr-8'
+                                            }`}>
+                                                <p className="text-gray-800">{msg.text}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="flex space-x-2">
+                                        <input
+                                            type="text"
+                                            value={chatMessage}
+                                            onChange={(e) => setChatMessage(e.target.value)}
+                                            placeholder="Type your message..."
+                                            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                                        />
+                                        <button
+                                            onClick={() => {
+                                                if (chatMessage.trim()) {
+                                                    setChatMessages([...chatMessages, { text: chatMessage, sender: 'user' }]);
+                                                    setTimeout(() => {
+                                                        setChatMessages(prev => [...prev, {
+                                                            text: "I'd be happy to help you schedule an appointment with Dr. Matthews. Would you prefer an in-person visit or a virtual consultation?",
+                                                            sender: 'bot'
+                                                        }]);
+                                                    }, 1000);
+                                                    setChatMessage('');
+                                                }
+                                            }}
+                                            className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-2 rounded-lg hover:shadow-lg transition"
+                                        >
+                                            Send
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+        
+        // Render the component
+        ReactDOM.render(<VECEnhancedHomepage />, document.getElementById('root'));
+    </script>
+</body>
+</html>>
                         );
                         
                     case 'food-scanner':
@@ -999,135 +1112,4 @@
                                         Schedule Your Consultation
                                     </button>
                                 </div>
-                            </div>
-                        </div>
-                    </section>
-                    
-                    {/* Footer */}
-                    <footer className="bg-gray-900 text-white py-12">
-                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
-                                <div>
-                                    <div className="flex items-center space-x-2 mb-4">
-                                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-teal-500 rounded-lg"></div>
-                                        <span className="font-semibold">Virginia Endocrinology</span>
-                                    </div>
-                                    <p className="text-gray-400">Expert care for your healthiest life</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold mb-4">Services</h4>
-                                    <ul className="space-y-2 text-gray-400">
-                                        <li><a href="#" className="hover:text-white transition">Diabetes Care</a></li>
-                                        <li><a href="#" className="hover:text-white transition">Thyroid Treatment</a></li>
-                                        <li><a href="#" className="hover:text-white transition">Hormone Therapy</a></li>
-                                        <li><a href="#" className="hover:text-white transition">Metabolic Health</a></li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold mb-4">Resources</h4>
-                                    <ul className="space-y-2 text-gray-400">
-                                        <li><a href="#" className="hover:text-white transition">Patient Portal</a></li>
-                                        <li><a href="#" className="hover:text-white transition">AI Tools</a></li>
-                                        <li><a href="#" className="hover:text-white transition">Health Library</a></li>
-                                        <li><a href="#" className="hover:text-white transition">Insurance</a></li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold mb-4">Office Hours</h4>
-                                    <ul className="space-y-2 text-gray-400">
-                                        <li>Monday - Friday: 8:00 AM - 5:00 PM</li>
-                                        <li>Saturday: 9:00 AM - 12:00 PM</li>
-                                        <li>Sunday: Closed</li>
-                                        <li className="pt-2">24/7 AI Health Coach Available</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                                <p>&copy; 2025 Virginia Endocrinology Consultants. All rights reserved.</p>
-                            </div>
-                        </div>
-                    </footer>
-                    
-                    {/* Health Coach Modal */}
-                    {showHealthCoach && (
-                        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-                            <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-hidden shadow-2xl">
-                                <div className="bg-gradient-to-r from-green-500 to-teal-500 p-6 text-white">
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center space-x-3">
-                                            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                                                <Icon name="Bot" className="w-6 h-6" />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-xl font-semibold">AI Health Coach</h3>
-                                                <p className="text-white/80 text-sm">I'm here to help 24/7</p>
-                                            </div>
-                                        </div>
-                                        <button
-                                            onClick={() => setShowHealthCoach(false)}
-                                            className="text-white/80 hover:text-white transition"
-                                        >
-                                            <Icon name="X" className="w-6 h-6" />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="p-6">
-                                    <div className="space-y-4 mb-4 max-h-96 overflow-y-auto">
-                                        <div className="bg-green-50 p-4 rounded-lg">
-                                            <p className="text-gray-800">
-                                                Hello! I'm your AI Health Coach. I can help you:
-                                            </p>
-                                            <ul className="mt-2 space-y-1 text-sm text-gray-600">
-                                                <li>• Schedule appointments with Dr. Matthews</li>
-                                                <li>• Answer questions about our services</li>
-                                                <li>• Provide general health guidance</li>
-                                                <li>• Help in over 50 languages</li>
-                                            </ul>
-                                        </div>
-                                        {chatMessages.map((msg, idx) => (
-                                            <div key={idx} className={`p-4 rounded-lg ${
-                                                msg.sender === 'user' ? 'bg-blue-50 ml-8' : 'bg-gray-50 mr-8'
-                                            }`}>
-                                                <p className="text-gray-800">{msg.text}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="flex space-x-2">
-                                        <input
-                                            type="text"
-                                            value={chatMessage}
-                                            onChange={(e) => setChatMessage(e.target.value)}
-                                            placeholder="Type your message..."
-                                            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-                                        />
-                                        <button
-                                            onClick={() => {
-                                                if (chatMessage.trim()) {
-                                                    setChatMessages([...chatMessages, { text: chatMessage, sender: 'user' }]);
-                                                    setTimeout(() => {
-                                                        setChatMessages(prev => [...prev, {
-                                                            text: "I'd be happy to help you schedule an appointment with Dr. Matthews. Would you prefer an in-person visit or a virtual consultation?",
-                                                            sender: 'bot'
-                                                        }]);
-                                                    }, 1000);
-                                                    setChatMessage('');
-                                                }
-                                            }}
-                                            className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-2 rounded-lg hover:shadow-lg transition"
-                                        >
-                                            Send
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
-        };
-        
-        // Render the component
-        ReactDOM.render(<VECEnhancedHomepage />, document.getElementById('root'));
-    </script>
-</body>
-</html>
+                            </div
