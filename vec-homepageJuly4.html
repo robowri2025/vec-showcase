@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virginia Endocrinology Consultants - Expert Endocrine Care</title>
     
-    <!-- React and Babel -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- React 17 (more stable with Babel standalone) -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
     <style>
         @keyframes fadeIn {
@@ -79,36 +79,41 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, Fragment } = React;
         
-        // Icon components mapping
-        const iconComponents = {
-            Camera: 'camera',
-            Shield: 'shield',
-            MessageCircle: 'message-circle',
-            Globe: 'globe',
-            Calendar: 'calendar',
-            Phone: 'phone',
-            Mail: 'mail',
-            MapPin: 'map-pin',
-            Star: 'star',
-            CheckCircle: 'check-circle',
-            Brain: 'brain',
-            Heart: 'heart',
-            Activity: 'activity',
-            Zap: 'zap',
-            Bot: 'bot',
-            ChevronRight: 'chevron-right',
-            Menu: 'menu',
-            X: 'x',
-            Award: 'award',
-            Clock: 'clock',
-            Users: 'users',
-            ArrowRight: 'arrow-right',
-            ChevronDown: 'chevron-down'
-        };
-        
         // Icon component wrapper
         const Icon = ({ name, className = "" }) => {
-            return <i data-lucide={iconComponents[name]} className={className}></i>;
+            useEffect(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, []);
+            
+            const iconMap = {
+                Camera: 'camera',
+                Shield: 'shield',
+                MessageCircle: 'message-circle',
+                Globe: 'globe',
+                Calendar: 'calendar',
+                Phone: 'phone',
+                Mail: 'mail',
+                MapPin: 'map-pin',
+                Star: 'star',
+                CheckCircle: 'check-circle',
+                Brain: 'brain',
+                Heart: 'heart',
+                Activity: 'activity',
+                Zap: 'zap',
+                Bot: 'bot',
+                ChevronRight: 'chevron-right',
+                Menu: 'menu',
+                X: 'x',
+                Award: 'award',
+                Clock: 'clock',
+                Users: 'users',
+                ArrowRight: 'arrow-right',
+                ChevronDown: 'chevron-down'
+            };
+            
+            return <i data-lucide={iconMap[name]} className={className}></i>;
         };
         
         const VECEnhancedHomepage = () => {
@@ -130,8 +135,8 @@
             const [coachTyping, setCoachTyping] = useState(false);
             
             const languages = [
-                'English', 'Español', 'Français', '中文', '한국어', 'Tiếng Việt',
-                'Português', 'Русский', 'العربية', 'हिन्दी', 'Tagalog', '日本語'
+                'English', 'Spanish', 'French', 'Chinese', 'Korean', 'Vietnamese',
+                'Portuguese', 'Russian', 'Arabic', 'Hindi', 'Tagalog', 'Japanese'
             ];
             
             const tools = [
@@ -242,23 +247,16 @@
                 }
             }, [activeToolIndex, showToolAnimation]);
             
-            // Initialize Lucide icons after render
-            useEffect(() => {
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            });
-            
             const renderToolAnimation = () => {
                 const tool = tools[activeToolIndex];
                 
                 switch (tool.id) {
                     case 'virtual-visits':
                         const translationPhrases = [
-                            { lang: 'English', text: 'How are you feeling today?', flag: '🇺🇸' },
-                            { lang: 'Spanish', text: '¿Cómo te sientes hoy?', flag: '🇪🇸' },
-                            { lang: 'Chinese', text: '你今天感觉怎么样？', flag: '🇨🇳' },
-                            { lang: 'Arabic', text: 'كيف تشعر اليوم؟', flag: '🇸🇦' }
+                            { lang: 'English', text: 'How are you feeling today?', flag: 'US' },
+                            { lang: 'Spanish', text: 'Como te sientes hoy?', flag: 'ES' },
+                            { lang: 'Chinese', text: 'How are you feeling today?', flag: 'CN' },
+                            { lang: 'Arabic', text: 'How are you feeling today?', flag: 'SA' }
                         ];
                         
                         return (
@@ -272,7 +270,7 @@
                                                     <div className="absolute inset-0 flex items-center justify-center">
                                                         <div className="text-center">
                                                             <div className="w-20 h-20 bg-white/10 rounded-full mx-auto mb-3 flex items-center justify-center backdrop-blur-sm">
-                                                                <span className="text-4xl">👩‍⚕️</span>
+                                                                <span className="text-2xl">Doctor</span>
                                                             </div>
                                                             <p className="text-white/90 font-medium">Dr. Matthews</p>
                                                             <p className="text-white/60 text-xs mt-1">Speaking English</p>
@@ -329,14 +327,14 @@
                                                     <div className="absolute inset-0 flex items-center justify-center">
                                                         <div className="text-center">
                                                             <div className="w-20 h-20 bg-white/10 rounded-full mx-auto mb-3 flex items-center justify-center backdrop-blur-sm">
-                                                                <span className="text-4xl">👤</span>
+                                                                <span className="text-2xl">Patient</span>
                                                             </div>
                                                             <p className="text-white/90 font-medium">Patient</p>
                                                             <p className="text-white/60 text-xs mt-1">Speaking Spanish</p>
                                                         </div>
                                                     </div>
                                                     <div className="absolute top-4 right-4 bg-teal-500 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-lg">
-                                                        🇪🇸 Español
+                                                        ES Spanish
                                                     </div>
                                                     <div className="absolute bottom-4 left-4 right-4">
                                                         <div className="bg-black/50 backdrop-blur-sm rounded-lg p-3">
@@ -424,7 +422,7 @@
                                             Supporting 50+ Languages Worldwide
                                         </p>
                                         <p className="text-xs opacity-90">
-                                            Spanish • Mandarin • Arabic • Hindi • Vietnamese • Korean • Portuguese • Russian • French • And many more...
+                                            Spanish - Mandarin - Arabic - Hindi - Vietnamese - Korean - Portuguese - Russian - French - And many more...
                                         </p>
                                     </div>
                                 </div>
@@ -438,7 +436,7 @@
                                     <div className="bg-white h-full rounded-2xl overflow-hidden relative">
                                         <div className="absolute inset-0 bg-gradient-to-br from-purple-100 to-pink-100">
                                             <div className="absolute inset-4 bg-white rounded-lg shadow-lg flex items-center justify-center">
-                                                <div className="text-6xl">🍕</div>
+                                                <div className="text-6xl">Pizza</div>
                                             </div>
                                             {scanProgress < 100 && (
                                                 <div className="absolute inset-0 flex items-center justify-center">
@@ -473,7 +471,7 @@
                                                         </div>
                                                     </div>
                                                     <div className="mt-3 p-2 bg-purple-50 rounded-lg">
-                                                        <p className="text-xs text-purple-700">💡 Tip: Add vegetables to balance this meal</p>
+                                                        <p className="text-xs text-purple-700">Tip: Add vegetables to balance this meal</p>
                                                     </div>
                                                 </div>
                                             )}
@@ -498,7 +496,7 @@
                                         }`}>
                                             <div className="flex items-center gap-3">
                                                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                                    💊
+                                                    <span className="text-2xl">Pill</span>
                                                 </div>
                                                 <div>
                                                     <h4 className="font-semibold">Metformin</h4>
@@ -512,7 +510,7 @@
                                         }`}>
                                             <div className="flex items-center gap-3">
                                                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                                                    💊
+                                                    <span className="text-2xl">Pill</span>
                                                 </div>
                                                 <div>
                                                     <h4 className="font-semibold">Levothyroxine</h4>
@@ -737,7 +735,7 @@
                                         <p className="text-gray-600 text-sm">Years of Combined Experience</p>
                                     </div>
                                     <div>
-                                        <div className="text-3xl font-bold text-purple-600 mb-2">4.9☆</div>
+                                        <div className="text-3xl font-bold text-purple-600 mb-2">4.9 Star</div>
                                         <p className="text-gray-600 text-sm">Average Patient Rating</p>
                                     </div>
                                 </div>
@@ -773,10 +771,10 @@
                                                 <p className="text-lg text-gray-600 mb-6">{tools[currentToolIndex].description}</p>
                                                 <div className="bg-white rounded-lg p-4 shadow-sm">
                                                     <p className="font-mono text-sm">
-                                                        {currentToolIndex === 0 && '🌍 → 🗣️ → ✅ Understood'}
-                                                        {currentToolIndex === 1 && '📸 → 🥗 → 📊 Carbs: 32g'}
-                                                        {currentToolIndex === 2 && '💊 + 💊 → ⚠️ Check with doctor'}
-                                                        {currentToolIndex === 3 && '💬 → 🤖 → 📅 Appointment booked!'}
+                                                        {currentToolIndex === 0 && 'World -> Voice -> Check Understood'}
+                                                        {currentToolIndex === 1 && 'Camera -> Food -> Analysis Carbs: 32g'}
+                                                        {currentToolIndex === 2 && 'Med + Med -> Warning Check with doctor'}
+                                                        {currentToolIndex === 3 && 'Chat -> AI -> Calendar Appointment booked!'}
                                                     </p>
                                                 </div>
                                             </div>
@@ -1081,10 +1079,10 @@
                                                 Hello! I'm your AI Health Coach. I can help you:
                                             </p>
                                             <ul className="mt-2 space-y-1 text-sm text-gray-600">
-                                                <li>• Schedule appointments with Dr. Matthews</li>
-                                                <li>• Answer questions about our services</li>
-                                                <li>• Provide general health guidance</li>
-                                                <li>• Help in over 50 languages</li>
+                                                <li>- Schedule appointments with Dr. Matthews</li>
+                                                <li>- Answer questions about our services</li>
+                                                <li>- Provide general health guidance</li>
+                                                <li>- Help in over 50 languages</li>
                                             </ul>
                                         </div>
                                         {chatMessages.map((msg, idx) => (
