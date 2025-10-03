@@ -13,8 +13,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Remove Lucide to avoid DOM conflicts -->
     
     <style>
         @keyframes fadeIn {
@@ -79,35 +78,36 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, Fragment } = React;
         
-        // Icon component wrapper - simplified to prevent DOM conflicts
+        // Simple Icon component without external dependencies
         const Icon = ({ name, className = "" }) => {
-            const iconMap = {
-                Camera: 'camera',
-                Shield: 'shield',
-                MessageCircle: 'message-circle',
-                Globe: 'globe',
-                Calendar: 'calendar',
-                Phone: 'phone',
-                Mail: 'mail',
-                MapPin: 'map-pin',
-                Star: 'star',
-                CheckCircle: 'check-circle',
-                Brain: 'brain',
-                Heart: 'heart',
-                Activity: 'activity',
-                Zap: 'zap',
-                Bot: 'bot',
-                ChevronRight: 'chevron-right',
-                Menu: 'menu',
-                X: 'x',
-                Award: 'award',
-                Clock: 'clock',
-                Users: 'users',
-                ArrowRight: 'arrow-right',
-                ChevronDown: 'chevron-down'
+            // Use simple text symbols instead of complex icons to avoid DOM issues
+            const icons = {
+                Camera: '📷',
+                Shield: '🛡️',
+                MessageCircle: '💬',
+                Globe: '🌍',
+                Calendar: '📅',
+                Phone: '📞',
+                Mail: '✉️',
+                MapPin: '📍',
+                Star: '⭐',
+                CheckCircle: '✅',
+                Brain: '🧠',
+                Heart: '❤️',
+                Activity: '📊',
+                Zap: '⚡',
+                Bot: '🤖',
+                ChevronRight: '›',
+                Menu: '☰',
+                X: '✕',
+                Award: '🏆',
+                Clock: '🕐',
+                Users: '👥',
+                ArrowRight: '→',
+                ChevronDown: '⌄'
             };
             
-            return <i data-lucide={iconMap[name]} className={className}></i>;
+            return <span className={className} style={{ fontSize: '1em', lineHeight: '1' }}>{icons[name] || '•'}</span>;
         };
         
         const VECEnhancedHomepage = () => {
@@ -619,10 +619,12 @@
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-teal-500 rounded-lg"></div>
-                                    <span className="font-semibold text-gray-900">Virginia Endocrinology</span>
+                                    <span className="font-semibold text-gray-900 text-sm lg:text-base whitespace-nowrap">
+                                        Virginia Endocrinology Consultants
+                                    </span>
                                 </div>
                                 
-                                <nav style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="hidden md:flex">
+                                <nav style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }} className="hidden md:flex">
                                     <a href="#expertise" className="text-gray-600 hover:text-gray-900 transition">Our Expertise</a>
                                     <a href="#tools" className="text-gray-600 hover:text-gray-900 transition">Smart Tools</a>
                                     <a href="#team" className="text-gray-600 hover:text-gray-900 transition">Our Team</a>
@@ -903,7 +905,7 @@
                         </div>
                     </section>
                     
-                    {/* Meet Dr. Bowen-Wright */}
+                    {/* Meet Dr. Matthews */}
                     <section id="team" className="py-12 bg-white">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div className="max-w-3xl mx-auto">
